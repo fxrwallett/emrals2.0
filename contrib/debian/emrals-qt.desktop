@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=emrals
+Comment=emrals P2P Cryptocurrency
+Exec=emrals-qt %u
+Terminal=false
+Type=Application
+Icon=emrals128
+MimeType=x-scheme-handler/emrals;
+Categories=Office;Finance;
+StartupWMClass=emrals-qt
+Name[en_IN]=emrals-qt.desktop

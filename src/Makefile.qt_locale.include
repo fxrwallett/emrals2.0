@@ -1,0 +1,14 @@
+QT_TS = \
+  qt/locale/emrals_de.ts \
+  qt/locale/emrals_en.ts \
+  qt/locale/emrals_en_US.ts \
+  qt/locale/emrals_es.ts \
+  qt/locale/emrals_fr_FR.ts \
+  qt/locale/emrals_hr_HR.ts \
+  qt/locale/emrals_it.ts \
+  qt/locale/emrals_ko_KR.ts \
+  qt/locale/emrals_nl.ts \
+  qt/locale/emrals_pl.ts \
+  qt/locale/emrals_ru.ts \
+  qt/locale/emrals_tr.ts \
+  qt/locale/emrals_zh_CN.ts

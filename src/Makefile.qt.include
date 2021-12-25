@@ -1,0 +1,725 @@
+# Copyright (c) 2013-2016 The Bitcoin Core developers
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+bin_PROGRAMS += qt/emrals-qt
+EXTRA_LIBRARIES += qt/libbitcoinqt.a
+
+# emrals qt core #
+include Makefile.qt_locale.include
+
+QT_FORMS_UI = \
+  qt/forms/addressbookpage.ui \
+  qt/forms/askpassphrasedialog.ui \
+  qt/forms/coincontroldialog.ui \
+  qt/forms/editaddressdialog.ui \
+  qt/forms/helpmessagedialog.ui \
+  qt/forms/intro.ui \
+  qt/forms/openuridialog.ui \
+  qt/forms/optionsdialog.ui \
+  qt/forms/rpcconsole.ui \
+  qt/emrals/forms/loadingdialog.ui \
+  qt/emrals/forms/snackbar.ui \
+  qt/emrals/forms/navmenuwidget.ui \
+  qt/emrals/forms/lockunlock.ui \
+  qt/emrals/forms/expandablebutton.ui \
+  qt/emrals/forms/receivedialog.ui \
+  qt/emrals/forms/topbar.ui \
+  qt/emrals/forms/txrow.ui \
+  qt/emrals/forms/dashboardwidget.ui \
+  qt/emrals/forms/addresslabelrow.ui \
+  qt/emrals/forms/contactdropdownrow.ui \
+  qt/emrals/forms/mninfodialog.ui \
+  qt/emrals/forms/optionbutton.ui \
+  qt/emrals/forms/masternodewizarddialog.ui \
+  qt/emrals/forms/mnrow.ui \
+  qt/emrals/forms/masternodeswidget.ui \
+  qt/emrals/forms/myaddressrow.ui \
+  qt/emrals/forms/csrow.ui \
+  qt/emrals/forms/sendchangeaddressdialog.ui \
+  qt/emrals/forms/sendconfirmdialog.ui \
+  qt/emrals/forms/sendcustomfeedialog.ui \
+  qt/emrals/forms/sendchangeaddressdialog.ui \
+  qt/emrals/forms/sendmultirow.ui \
+  qt/emrals/forms/send.ui \
+  qt/emrals/forms/addnewaddressdialog.ui \
+  qt/emrals/forms/addnewcontactdialog.ui \
+  qt/emrals/forms/requestdialog.ui \
+  qt/emrals/forms/receivewidget.ui \
+  qt/emrals/forms/tooltipmenu.ui \
+  qt/emrals/forms/addresseswidget.ui \
+  qt/emrals/forms/defaultdialog.ui \
+  qt/emrals/forms/coldstakingwidget.ui \
+  qt/emrals/settings/forms/settingsbackupwallet.ui \
+  qt/emrals/settings/forms/settingsexportcsv.ui \
+  qt/emrals/settings/forms/settingsbittoolwidget.ui \
+  qt/emrals/settings/forms/settingsconsolewidget.ui \
+  qt/emrals/settings/forms/settingsdisplayoptionswidget.ui \
+  qt/emrals/settings/forms/settingsfaqwidget.ui \
+  qt/emrals/settings/forms/settingsinformationwidget.ui \
+  qt/emrals/settings/forms/settingsmainoptionswidget.ui \
+  qt/emrals/settings/forms/settingsmultisenddialog.ui \
+  qt/emrals/settings/forms/settingsmultisendwidget.ui \
+  qt/emrals/settings/forms/settingssignmessagewidgets.ui \
+  qt/emrals/settings/forms/settingswalletoptionswidget.ui \
+  qt/emrals/settings/forms/settingswalletrepairwidget.ui \
+  qt/emrals/settings/forms/settingswidget.ui \
+  qt/emrals/forms/welcomecontentwidget.ui \
+  qt/emrals/forms/splash.ui
+
+QT_MOC_CPP = \
+  qt/moc_addressbookpage.cpp \
+  qt/moc_addresstablemodel.cpp \
+  qt/moc_askpassphrasedialog.cpp \
+  qt/moc_bantablemodel.cpp \
+  qt/moc_bitcoinaddressvalidator.cpp \
+  qt/emrals/moc_emralsgui.cpp \
+  qt/moc_bitcoinunits.cpp \
+  qt/moc_clientmodel.cpp \
+  qt/moc_coincontroldialog.cpp \
+  qt/moc_coincontroltreewidget.cpp \
+  qt/moc_csvmodelwriter.cpp \
+  qt/moc_editaddressdialog.cpp \
+  qt/moc_guiutil.cpp \
+  qt/moc_intro.cpp \
+  qt/moc_macdockiconhandler.cpp \
+  qt/moc_macnotificationhandler.cpp \
+  qt/moc_notificator.cpp \
+  qt/moc_openuridialog.cpp \
+  qt/moc_optionsdialog.cpp \
+  qt/moc_optionsmodel.cpp \
+  qt/moc_peertablemodel.cpp \
+  qt/moc_paymentserver.cpp \
+  qt/moc_qvalidatedlineedit.cpp \
+  qt/moc_qvaluecombobox.cpp \
+  qt/moc_recentrequeststablemodel.cpp \
+  qt/moc_rpcconsole.cpp \
+  qt/moc_splashscreen.cpp \
+  qt/moc_trafficgraphwidget.cpp \
+  qt/moc_transactiondesc.cpp \
+  qt/moc_transactionfilterproxy.cpp \
+  qt/moc_transactiontablemodel.cpp \
+  qt/moc_utilitydialog.cpp \
+  qt/moc_walletmodel.cpp \
+  qt/emrals/moc_loadingdialog.cpp \
+  qt/emrals/moc_pwidget.cpp \
+  qt/emrals/moc_focuseddialog.cpp \
+  qt/emrals/moc_snackbar.cpp \
+  qt/emrals/moc_navmenuwidget.cpp \
+  qt/emrals/moc_lockunlock.cpp \
+  qt/emrals/moc_expandablebutton.cpp \
+  qt/emrals/moc_furabstractlistitemdelegate.cpp \
+  qt/emrals/moc_receivedialog.cpp \
+  qt/emrals/moc_pfborderimage.cpp \
+  qt/emrals/moc_topbar.cpp \
+  qt/emrals/moc_txrow.cpp \
+  qt/emrals/moc_dashboardwidget.cpp \
+  qt/emrals/moc_addresslabelrow.cpp \
+  qt/emrals/moc_contactdropdownrow.cpp \
+  qt/emrals/moc_mninfodialog.cpp \
+  qt/emrals/moc_optionbutton.cpp \
+  qt/emrals/moc_coldstakingmodel.cpp \
+  qt/emrals/moc_mnmodel.cpp \
+  qt/emrals/moc_masternodewizarddialog.cpp \
+  qt/emrals/moc_mnrow.cpp \
+  qt/emrals/moc_masternodeswidget.cpp \
+  qt/emrals/moc_myaddressrow.cpp \
+  qt/emrals/moc_csrow.cpp \
+  qt/emrals/moc_contactsdropdown.cpp \
+  qt/emrals/moc_sendchangeaddressdialog.cpp \
+  qt/emrals/moc_sendconfirmdialog.cpp \
+  qt/emrals/moc_sendcustomfeedialog.cpp \
+  qt/emrals/moc_sendchangeaddressdialog.cpp \
+  qt/emrals/moc_sendmultirow.cpp \
+  qt/emrals/moc_send.cpp \
+  qt/emrals/moc_addnewaddressdialog.cpp \
+  qt/emrals/moc_addnewcontactdialog.cpp \
+  qt/emrals/moc_requestdialog.cpp \
+  qt/emrals/moc_receivewidget.cpp \
+  qt/emrals/moc_tooltipmenu.cpp \
+  qt/emrals/moc_addresseswidget.cpp \
+  qt/emrals/moc_defaultdialog.cpp \
+  qt/emrals/moc_coldstakingwidget.cpp \
+  qt/emrals/settings/moc_settingsbackupwallet.cpp \
+  qt/emrals/settings/moc_settingsexportcsv.cpp \
+  qt/emrals/settings/moc_settingsbittoolwidget.cpp \
+  qt/emrals/settings/moc_settingsconsolewidget.cpp \
+  qt/emrals/settings/moc_settingsdisplayoptionswidget.cpp \
+  qt/emrals/settings/moc_settingsfaqwidget.cpp \
+  qt/emrals/settings/moc_settingsinformationwidget.cpp \
+  qt/emrals/settings/moc_settingsmainoptionswidget.cpp \
+  qt/emrals/settings/moc_settingsmultisenddialog.cpp \
+  qt/emrals/settings/moc_settingsmultisendwidget.cpp \
+  qt/emrals/settings/moc_settingssignmessagewidgets.cpp \
+  qt/emrals/settings/moc_settingswalletoptionswidget.cpp \
+  qt/emrals/settings/moc_settingswalletrepairwidget.cpp \
+  qt/emrals/settings/moc_settingswidget.cpp \
+  qt/emrals/moc_welcomecontentwidget.cpp \
+  qt/emrals/moc_splash.cpp
+
+BITCOIN_MM = \
+  qt/macdockiconhandler.mm \
+  qt/macnotificationhandler.mm
+
+QT_MOC = \
+  qt/emrals.moc \
+  qt/intro.moc \
+  qt/rpcconsole.moc \
+  qt/emrals/settings/moc_settingsconsolewidget.cpp
+
+QT_QRC_CPP = qt/qrc_emrals.cpp
+if TARGET_WINDOWS
+QT_QRC = qt/emrals.qrc
+else
+QT_QRC = qt/emrals1.qrc
+endif
+QT_QRC_LOCALE_CPP = qt/qrc_emrals_locale.cpp
+QT_QRC_LOCALE = qt/emrals_locale.qrc
+
+PROTOBUF_CC = qt/paymentrequest.pb.cc
+PROTOBUF_H = qt/paymentrequest.pb.h
+PROTOBUF_PROTO = qt/paymentrequest.proto
+
+BITCOIN_QT_H = \
+  qt/addressbookpage.h \
+  qt/addresstablemodel.h \
+  qt/askpassphrasedialog.h \
+  qt/bantablemodel.h \
+  qt/bitcoinaddressvalidator.h \
+  qt/emrals/emralsgui.h \
+  qt/bitcoinunits.h \
+  qt/clientmodel.h \
+  qt/coincontroldialog.h \
+  qt/coincontroltreewidget.h \
+  qt/csvmodelwriter.h \
+  qt/editaddressdialog.h \
+  qt/guiconstants.h \
+  qt/guiutil.h \
+  qt/intro.h \
+  qt/macdockiconhandler.h \
+  qt/macnotificationhandler.h \
+  qt/networkstyle.h \
+  qt/notificator.h \
+  qt/openuridialog.h \
+  qt/optionsdialog.h \
+  qt/optionsmodel.h \
+  qt/paymentrequestplus.h \
+  qt/paymentserver.h \
+  qt/peertablemodel.h \
+  qt/platformstyle.h \
+  qt/qvalidatedlineedit.h \
+  qt/qvaluecombobox.h \
+  qt/recentrequeststablemodel.h \
+  qt/rpcconsole.h \
+  qt/splashscreen.h \
+  qt/trafficgraphwidget.h \
+  qt/transactiondesc.h \
+  qt/transactionfilterproxy.h \
+  qt/transactionrecord.h \
+  qt/transactiontablemodel.h \
+  qt/utilitydialog.h \
+  qt/walletmodel.h \
+  qt/walletmodeltransaction.h \
+  qt/emrals/prunnable.h \
+  qt/emrals/pfborderimage.h \
+  qt/emrals/loadingdialog.h \
+  qt/winshutdownmonitor.h \
+  qt/emrals/pwidget.h \
+  qt/emrals/focuseddialog.h \
+  qt/emrals/guitransactionsutils.h \
+  qt/emrals/snackbar.h \
+  qt/emrals/navmenuwidget.h \
+  qt/emrals/lockunlock.h \
+  qt/emrals/receivedialog.h \
+  qt/emrals/furlistrow.h \
+  qt/emrals/furabstractlistitemdelegate.h \
+  qt/emrals/txviewholder.h \
+  qt/emrals/qtutils.h \
+  qt/emrals/expandablebutton.h \
+  qt/emrals/topbar.h \
+  qt/emrals/txrow.h \
+  qt/emrals/addressholder.h \
+  qt/emrals/addressfilterproxymodel.h \
+  qt/emrals/dashboardwidget.h \
+  qt/emrals/addresslabelrow.h \
+  qt/emrals/contactdropdownrow.h \
+  qt/emrals/mninfodialog.h \
+  qt/emrals/optionbutton.h \
+  qt/emrals/coldstakingmodel.h \
+  qt/emrals/mnmodel.h \
+  qt/emrals/masternodewizarddialog.h \
+  qt/emrals/mnrow.h \
+  qt/emrals/masternodeswidget.h \
+  qt/emrals/myaddressrow.h \
+  qt/emrals/csrow.h \
+  qt/emrals/contactsdropdown.h \
+  qt/emrals/sendchangeaddressdialog.h \
+  qt/emrals/sendconfirmdialog.h \
+  qt/emrals/sendcustomfeedialog.h \
+  qt/emrals/sendchangeaddressdialog.h \
+  qt/emrals/sendmultirow.h \
+  qt/emrals/send.h \
+  qt/emrals/addnewaddressdialog.h \
+  qt/emrals/addnewcontactdialog.h \
+  qt/emrals/requestdialog.h \
+  qt/emrals/receivewidget.h \
+  qt/emrals/tooltipmenu.h \
+  qt/emrals/addresseswidget.h \
+  qt/emrals/defaultdialog.h \
+  qt/emrals/coldstakingwidget.h \
+  qt/emrals/settings/settingsbackupwallet.h \
+  qt/emrals/settings/settingsexportcsv.h \
+  qt/emrals/settings/settingsbittoolwidget.h \
+  qt/emrals/settings/settingsconsolewidget.h \
+  qt/emrals/settings/settingsdisplayoptionswidget.h \
+  qt/emrals/settings/settingsfaqwidget.h \
+  qt/emrals/settings/settingsinformationwidget.h \
+  qt/emrals/settings/settingsmainoptionswidget.h \
+  qt/emrals/settings/settingsmultisenddialog.h \
+  qt/emrals/settings/settingsmultisendwidget.h \
+  qt/emrals/settings/settingssignmessagewidgets.h \
+  qt/emrals/settings/settingswalletoptionswidget.h \
+  qt/emrals/settings/settingswalletrepairwidget.h \
+  qt/emrals/settings/settingswidget.h \
+  qt/emrals/welcomecontentwidget.h \
+  qt/emrals/splash.h
+
+RES_ICONS = \
+  qt/res/icons/bitcoin.ico \
+  qt/res/icons/bitcoin.png \
+  qt/res/icons/lock_closed.png \
+  qt/res/icons/lock_open.png \
+  qt/res/icons/ic-transaction-received.png \
+  qt/res/icons/ic-transaction-mint.png \
+  qt/res/icons/ic-transaction-sent.png \
+  qt/res/icons/ic-transaction-staked.png \
+  qt/emrals/res/img/bg-dashboard-banner.png \
+  qt/emrals/res/img/bg-multi-number-dark.png \
+  qt/emrals/res/img/ic-check-locked.png \
+  qt/emrals/res/img/ic-nav-address.png \
+  qt/emrals/res/img/ic-update.png \
+  qt/emrals/res/img/bg-multi-number.png \
+  qt/emrals/res/img/ic-check-mint-off.png \
+  qt/emrals/res/img/ic-nav-cold-staking.png \
+  qt/emrals/res/img/ic-nav-cold-staking-active.png \
+  qt/emrals/res/img/ic-nav-dashboard-active.png \
+  qt/emrals/res/img/ic-wallet-status-locked.png \
+  qt/emrals/res/img/bg-splash.png \
+  qt/emrals/res/img/bg-splash.png \
+  qt/emrals/res/img/ic-check-mint.png \
+  qt/emrals/res/img/ic-nav-dashboard-hover.png \
+  qt/emrals/res/img/ic-wallet-status-staking.png \
+  qt/emrals/res/img/ic-check-peers-off.png \
+  qt/emrals/res/img/ic-nav-dashboard.png \
+  qt/emrals/res/img/ic-wallet-status-unlocked.png \
+  qt/emrals/res/img/ic-check-peers.png \
+  qt/emrals/res/img/ic-nav-master-active.png \
+  qt/emrals/res/img/ic-watch-password-white.png \
+  qt/emrals/res/img/bg-welcome-container.jpg \
+  qt/emrals/res/img/bg-welcome-container.png \
+  qt/emrals/res/img/bg-welcome-container.png \
+  qt/emrals/res/img/bg-welcome-container@2x.png \
+  qt/emrals/res/img/bg-welcome-container@3x.png \
+  qt/emrals/res/img/ic-check-staking-off.png \
+  qt/emrals/res/img/ic-nav-master-hover.png \
+  qt/emrals/res/img/ic-watch-password.png \
+  qt/emrals/res/img/bg-welcome.jpg \
+  qt/emrals/res/img/bg-welcome.png \
+  qt/emrals/res/img/bg-welcome@2x.jpg \
+  qt/emrals/res/img/bg-welcome@3x.jpg \
+  qt/emrals/res/img/bg-welcome.png \
+  qt/emrals/res/img/ic-check-staking.png \
+  qt/emrals/res/img/ic-nav-master.png \
+  qt/emrals/res/img/img-dashboard-banner.jpg \
+  qt/emrals/res/img/btn-radio-active.png \
+  qt/emrals/res/img/ic-check-sync-off.png \
+  qt/emrals/res/img/ic-nav-privacy-active.png \
+  qt/emrals/res/img/img-empty-contacts.png \
+  qt/emrals/res/img/btn-radio-off.png \
+  qt/emrals/res/img/ic-check-sync.png \
+  qt/emrals/res/img/ic-nav-privacy-hover.png \
+  qt/emrals/res/img/img-empty-dark-contacts.png \
+  qt/emrals/res/img/ic-contact-arrow-down.png \
+  qt/emrals/res/img/ic-contact-arrow-down-white.png \
+  qt/emrals/res/img/ic-check-sync.png \
+  qt/emrals/res/img/ic-check-faq.png \
+  qt/emrals/res/img/ic-nav-privacy.png \
+  qt/emrals/res/img/img-empty-dark-error.png \
+  qt/emrals/res/img/ic-add-label.png \
+  qt/emrals/res/img/ic-pending.png \
+  qt/emrals/res/img/ic-check-theme-dark.png \
+  qt/emrals/res/img/ic-nav-receive-active.png \
+  qt/emrals/res/img/img-empty-dark-masternode.png \
+  qt/emrals/res/img/ic-add-liliac.png \
+  qt/emrals/res/img/ic-check-theme-light.png \
+  qt/emrals/res/img/ic-nav-receive-hover.png \
+  qt/emrals/res/img/img-empty-dark-multisend.png \
+  qt/emrals/res/img/ic-add-purple.png \
+  qt/emrals/res/img/ic-check-white.png \
+  qt/emrals/res/img/ic-nav-receive.png \
+  qt/emrals/res/img/img-empty-dark-peers.png \
+  qt/emrals/res/img/ic-add.png \
+  qt/emrals/res/img/ic-check.png \
+  qt/emrals/res/img/ic-nav-send-active.png \
+  qt/emrals/res/img/img-empty-dark-staking-off.png \
+  qt/emrals/res/img/img-empty-dark-staking-on.png \
+  qt/emrals/res/img/ic-address-book-grey.png \
+  qt/emrals/res/img/ic-chevron-left.png \
+  qt/emrals/res/img/ic-nav-send-hover.png \
+  qt/emrals/res/img/img-empty-dark-transactions.png \
+  qt/emrals/res/img/ic-address-book-white.png \
+  qt/emrals/res/img/ic-chevron-right.png \
+  qt/emrals/res/img/ic-nav-send.png \
+  qt/emrals/res/img/img-empty-error.png \
+  qt/emrals/res/img/ic-address-book.png \
+  qt/emrals/res/img/ic-clear-liliac.png \
+  qt/emrals/res/img/ic-nav-settings-active.png \
+  qt/emrals/res/img/img-empty-masternode.png \
+  qt/emrals/res/img/ic-address-send-white.png \
+  qt/emrals/res/img/ic-clear-purple.png \
+  qt/emrals/res/img/ic-nav-settings-hover.png \
+  qt/emrals/res/img/img-empty-multisend.png \
+  qt/emrals/res/img/ic-address-send.png \
+  qt/emrals/res/img/ic-close-white.png \
+  qt/emrals/res/img/ic-nav-settings.png \
+  qt/emrals/res/img/img-empty-peers.png \
+  qt/emrals/res/img/img-empty-privacy.png \
+  qt/emrals/res/img/img-empty-privacy-dark.png \
+  qt/emrals/res/img/ic-arrow-drop-down-white.png \
+  qt/emrals/res/img/ic-close.png \
+  qt/emrals/res/img/ic-radio-liliac-on.png \
+  qt/emrals/res/img/img-empty-staking-off.png \
+  qt/emrals/res/img/ic-arrow-drop-down.png \
+  qt/emrals/res/img/ic-coin-emrals.png \
+  qt/emrals/res/img/ic-receive-off.png \
+  qt/emrals/res/img/img-empty-staking-on.png \
+  qt/emrals/res/img/ic-arrow-drop-up-white.png \
+  qt/emrals/res/img/ic-receive-on.png \
+  qt/emrals/res/img/img-empty-transactions.png \
+  qt/emrals/res/img/ic-arrow-drop-up.png \
+  qt/emrals/res/img/ic-received.png \
+  qt/emrals/res/img/img-logo-emrals.png \
+  qt/emrals/res/img/ic-arrow-drop-white-down.png \
+  qt/emrals/res/img/ic-combo-box.png \
+  qt/emrals/res/img/ic-send.png \
+  qt/emrals/res/img/img-logo-emrals@2x.png \
+  qt/emrals/res/img/ic-arrow-purple-down.png \
+  qt/emrals/res/img/ic-connect.png \
+  qt/emrals/res/img/ic-submenu-lock.png \
+  qt/emrals/res/img/img-logo-emrals@3x.png \
+  qt/emrals/res/img/img-logo-emrals.png \
+  qt/emrals/res/img/ic-arrow-right-white.png \
+  qt/emrals/res/img/ic-arrow-left-white.png \
+  qt/emrals/res/img/ic-arrow-left.png \
+  qt/emrals/res/img/ic-copy-liliac.png \
+  qt/emrals/res/img/ic-submenu-staking.png \
+  qt/emrals/res/img/img-nav-logo-emrals.png \
+  qt/emrals/res/img/ic-arrow-right.png \
+  qt/emrals/res/img/ic-copy.png \
+  qt/emrals/res/img/ic-copy-big.png \
+  qt/emrals/res/img/ic-copy-big-white.png \
+  qt/emrals/res/img/ic-submenu-unlock.png \
+  qt/emrals/res/img/img-nav-logo.png \
+  qt/emrals/res/img/ic-arrow-white-left.png \
+  qt/emrals/res/img/ic-exit.png \
+  qt/emrals/res/img/ic-switch-liliac-on.png \
+  qt/emrals/res/img/img-nav-logo.png \
+  qt/emrals/res/img/ic-arrow-white-right.png \
+  qt/emrals/res/img/ic-expand.png \
+  qt/emrals/res/img/ic-switch-off.png \
+  qt/emrals/res/img/img-qr-test-big.png \
+  qt/emrals/res/img/ic-check-active.png \
+  qt/emrals/res/img/ic-folder.png \
+  qt/emrals/res/img/ic-switch-on.png \
+  qt/emrals/res/img/img-qr-test.png \
+  qt/emrals/res/img/ic-check-box.png \
+  qt/emrals/res/img/ic-check-box-dark-active.png \
+  qt/emrals/res/img/ic-check-box-indeterminate.png \
+  qt/emrals/res/img/ic-check-box-liliac-indeterminate.png \
+  qt/emrals/res/img/ic-label-liliac.png \
+  qt/emrals/res/img/ic-transaction-warning.png \
+  qt/emrals/res/img/ic-transaction-mint.png \
+  qt/emrals/res/img/ic-transaction-mint-inactive.png \
+  qt/emrals/res/img/ic-check-cold-staking.png \
+  qt/emrals/res/img/ic-check-cold-staking-off.png \
+  qt/emrals/res/img/ic-check-cold-staking-enabled.png \
+  qt/emrals/res/img/dark/ic-transaction-cs-contract.png \
+  qt/emrals/res/img/dark/ic-transaction-cs-contract-inactive.png \
+  qt/emrals/res/img/img-qr.png \
+  qt/emrals/res/img/ic-check-connect-off.png \
+  qt/emrals/res/img/ic-check-tor-off.png \
+  qt/emrals/res/img/ic-check-tor.png \
+  qt/emrals/res/img/ic-label.png \
+  qt/emrals/res/img/ic-transaction-received.png \
+  qt/emrals/res/img/dark/ic-transaction-received.png \
+  qt/emrals/res/img/dark/ic-transaction-warning.png \
+  qt/emrals/res/img/dark/ic-transaction-mint.png \
+  qt/emrals/res/img/dark/ic-transaction-mint-inactive.png \
+  qt/emrals/res/img/ic-transaction-received-inactive.png \
+  qt/emrals/res/img/dark/ic-transaction-received-inactive.png \
+  qt/emrals/res/img/img-welcome-step1.png \
+  qt/emrals/res/img/ic-check-connect.png \
+  qt/emrals/res/img/ic-menu-hover.png \
+  qt/emrals/res/img/ic-transaction-sent.png \
+  qt/emrals/res/img/ic-transaction-sent-inactive.png \
+  qt/emrals/res/img/dark/ic-transaction-sent.png \
+  qt/emrals/res/img/dark/ic-transaction-sent-inactive.png \
+  qt/emrals/res/img/img-welcome-step2.png \
+  qt/emrals/res/img/ic-check-dark.png \
+  qt/emrals/res/img/ic-mint.png \
+  qt/emrals/res/img/ic-transaction-staked.png \
+  qt/emrals/res/img/ic-transaction-staked-inactive.png \
+  qt/emrals/res/img/dark/ic-transaction-staked.png \
+  qt/emrals/res/img/dark/ic-transaction-staked-inactive.png \
+  qt/emrals/res/img/img-welcome-step3.png \
+  qt/emrals/res/img/ic-check-liliac-on.png \
+  qt/emrals/res/img/ic-nav-address-active.png \
+  qt/emrals/res/img/ic-unlock-staking.png \
+  qt/emrals/res/img/img-welcome-step4.png \
+  qt/emrals/res/img/ic-check-locked-off.png \
+  qt/emrals/res/img/ic-nav-address-hover.png \
+  qt/emrals/res/img/ic-update-liliac.png \
+  qt/emrals/res/img/ic-arrow-drop-down-purple.png \
+  qt/emrals/res/img/ic-arrow-drop-up-purple.png \
+  qt/emrals/res/img/ic-check-liliac-indeterminate.png \
+  qt/emrals/res/img/ic-check-box-liliac-indeterminate.png \
+  qt/emrals/res/img/ic-transaction-stake-delegated.png \
+  qt/emrals/res/img/ic-transaction-stake-delegated-inactive.png \
+  qt/emrals/res/img/ic-transaction-stake-hot.png \
+  qt/emrals/res/img/ic-transaction-stake-hot-inactive.png \
+  qt/emrals/res/img/dark/ic-transaction-stake-hot.png \
+  qt/emrals/res/img/dark/ic-transaction-stake-hot-inactive.png \
+  qt/emrals/res/img/dark/ic-transaction-stake-delegated.png \
+  qt/emrals/res/img/dark/ic-transaction-stake-delegated-inactive.png \
+  qt/emrals/res/img/ic-transaction-cs-contract.png \
+  qt/emrals/res/img/ic-transaction-cs-contract-inactive.png \
+  qt/emrals/res/img/ic-check-box-indeterminate.png \
+  qt/emrals/res/img/ani-loading-dark.gif \
+  qt/emrals/res/img/ani-loading.gif
+
+
+
+BITCOIN_QT_BASE_CPP = \
+  qt/bantablemodel.cpp \
+  qt/bitcoinaddressvalidator.cpp \
+  qt/emrals/emralsgui.cpp \
+  qt/bitcoinunits.cpp \
+  qt/clientmodel.cpp \
+  qt/csvmodelwriter.cpp \
+  qt/guiutil.cpp \
+  qt/intro.cpp \
+  qt/networkstyle.cpp \
+  qt/notificator.cpp \
+  qt/optionsdialog.cpp \
+  qt/optionsmodel.cpp \
+  qt/peertablemodel.cpp \
+  qt/platformstyle.cpp \
+  qt/qvalidatedlineedit.cpp \
+  qt/qvaluecombobox.cpp \
+  qt/rpcconsole.cpp \
+  qt/splashscreen.cpp \
+  qt/trafficgraphwidget.cpp \
+  qt/utilitydialog.cpp
+
+BITCOIN_QT_WINDOWS_CPP = qt/winshutdownmonitor.cpp
+
+BITCOIN_QT_WALLET_CPP = \
+  qt/addressbookpage.cpp \
+  qt/addresstablemodel.cpp \
+  qt/askpassphrasedialog.cpp \
+  qt/coincontroldialog.cpp \
+  qt/coincontroltreewidget.cpp \
+  qt/editaddressdialog.cpp \
+  qt/openuridialog.cpp \
+  qt/paymentrequestplus.cpp \
+  qt/paymentserver.cpp \
+  qt/recentrequeststablemodel.cpp \
+  qt/transactiondesc.cpp \
+  qt/transactionfilterproxy.cpp \
+  qt/transactionrecord.cpp \
+  qt/transactiontablemodel.cpp \
+  qt/walletmodel.cpp \
+  qt/walletmodeltransaction.cpp \
+  qt/emrals/loadingdialog.cpp \
+  qt/emrals/pwidget.cpp \
+  qt/emrals/focuseddialog.cpp \
+  qt/emrals/guitransactionsutils.cpp \
+  qt/emrals/snackbar.cpp \
+  qt/emrals/navmenuwidget.cpp \
+  qt/emrals/lockunlock.cpp \
+  qt/emrals/receivedialog.cpp \
+  qt/emrals/furabstractlistitemdelegate.cpp \
+  qt/emrals/txviewholder.cpp \
+  qt/emrals/qtutils.cpp \
+  qt/emrals/expandablebutton.cpp \
+  qt/emrals/topbar.cpp \
+  qt/emrals/txrow.cpp \
+  qt/emrals/addressholder.cpp \
+  qt/emrals/addressfilterproxymodel.cpp \
+  qt/emrals/dashboardwidget.cpp \
+  qt/emrals/addresslabelrow.cpp \
+  qt/emrals/contactdropdownrow.cpp \
+  qt/emrals/contactsdropdown.cpp \
+  qt/emrals/optionbutton.cpp \
+  qt/emrals/mninfodialog.cpp \
+  qt/emrals/coldstakingmodel.cpp \
+  qt/emrals/mnmodel.cpp \
+  qt/emrals/masternodewizarddialog.cpp \
+  qt/emrals/mnrow.cpp \
+  qt/emrals/masternodeswidget.cpp \
+  qt/emrals/myaddressrow.cpp \
+  qt/emrals/csrow.cpp \
+  qt/emrals/sendchangeaddressdialog.cpp \
+  qt/emrals/sendconfirmdialog.cpp \
+  qt/emrals/sendcustomfeedialog.cpp \
+  qt/emrals/sendchangeaddressdialog.cpp \
+  qt/emrals/sendmultirow.cpp \
+  qt/emrals/send.cpp \
+  qt/emrals/addnewaddressdialog.cpp \
+  qt/emrals/addnewcontactdialog.cpp \
+  qt/emrals/requestdialog.cpp \
+  qt/emrals/receivewidget.cpp \
+  qt/emrals/tooltipmenu.cpp \
+  qt/emrals/addresseswidget.cpp \
+  qt/emrals/defaultdialog.cpp \
+  qt/emrals/coldstakingwidget.cpp \
+  qt/emrals/settings/settingsbackupwallet.cpp \
+  qt/emrals/settings/settingsexportcsv.cpp \
+  qt/emrals/settings/settingsbittoolwidget.cpp \
+  qt/emrals/settings/settingsconsolewidget.cpp \
+  qt/emrals/settings/settingsdisplayoptionswidget.cpp \
+  qt/emrals/settings/settingsfaqwidget.cpp \
+  qt/emrals/settings/settingsinformationwidget.cpp \
+  qt/emrals/settings/settingsmainoptionswidget.cpp \
+  qt/emrals/settings/settingsmultisenddialog.cpp \
+  qt/emrals/settings/settingsmultisendwidget.cpp \
+  qt/emrals/settings/settingssignmessagewidgets.cpp \
+  qt/emrals/settings/settingswalletoptionswidget.cpp \
+  qt/emrals/settings/settingswalletrepairwidget.cpp \
+  qt/emrals/settings/settingswidget.cpp \
+  qt/emrals/welcomecontentwidget.cpp \
+  qt/emrals/splash.cpp
+
+
+BITCOIN_QT_CPP = $(BITCOIN_QT_BASE_CPP)
+if TARGET_WINDOWS
+BITCOIN_QT_CPP += $(BITCOIN_QT_WINDOWS_CPP)
+endif
+if ENABLE_WALLET
+BITCOIN_QT_CPP += $(BITCOIN_QT_WALLET_CPP)
+endif
+
+RES_IMAGES = \
+  qt/res/images/about.png \
+  qt/res/images/emrals.png
+
+RES_CSS = \
+  qt/res/css/default.css \
+  qt/emrals/res/css/style_dark.css \
+  qt/emrals/res/css/style_light.css
+
+BITCOIN_RC = qt/res/emrals-qt-res.rc
+
+BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
+  -I$(builddir)/qt/forms -DQT_NO_KEYWORDS
+
+qt_libbitcoinqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(QT_DBUS_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_libbitcoinqt_a_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_libbitcoinqt_a_OBJCXXFLAGS = $(AM_OBJCXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_libbitcoinqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+  $(QT_QRC) $(QT_QRC_LOCALE) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS)
+
+nodist_qt_libbitcoinqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+  $(PROTOBUF_H) $(QT_QRC_CPP) $(QT_QRC_LOCALE_CPP)
+
+# forms/foo.h -> forms/ui_foo.h
+QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
+
+# Most files will depend on the forms and moc files as includes. Generate them
+# before anything else.
+$(QT_MOC): $(QT_FORMS_H)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_emrals_qt_OBJECTS) : | $(QT_MOC)
+
+#Generating these with a half-written protobuf header leads to wacky results.
+#This makes sure it's done.
+$(QT_MOC): $(PROTOBUF_H)
+$(QT_MOC_CPP): $(PROTOBUF_H)
+
+# emrals-qt binary #
+qt_emrals_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_emrals_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_emrals_qt_SOURCES = qt/emrals.cpp
+if TARGET_DARWIN
+  qt_emrals_qt_SOURCES += $(BITCOIN_MM)
+endif
+if TARGET_WINDOWS
+  qt_emrals_qt_SOURCES += $(BITCOIN_RC)
+endif
+qt_emrals_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
+if ENABLE_WALLET
+qt_emrals_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+endif
+if ENABLE_ZMQ
+qt_emrals_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+endif
+qt_emrals_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(SVG_LIBS) $(CHARTS_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
+  $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+qt_emrals_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_emrals_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+
+#locale/foo.ts -> locale/foo.qm
+QT_QM=$(QT_TS:.ts=.qm)
+
+SECONDARY: $(QT_QM)
+
+$(srcdir)/qt/emralsstrings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_wallet_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_zmq_a_SOURCES) $(libbitcoin_util_a_SOURCES)
+	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
+	$(AM_V_GEN) cd $(srcdir); XGETTEXT=$(XGETTEXT) PACKAGE_NAME="$(PACKAGE_NAME)" $(PYTHON) ../share/qt/extract_strings_qt.py $^
+
+translate: $(srcdir)/qt/emralsstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_BASE_CPP) qt/emrals.cpp $(BITCOIN_QT_WINDOWS_CPP) $(BITCOIN_QT_WALLET_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts $(srcdir)/qt/locale/emrals_en.ts
+
+$(QT_QRC_LOCALE_CPP): $(QT_QRC_LOCALE) $(QT_QM)
+	@test -f $(RCC)
+	@cp -f $< $(@D)/temp_$(<F)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name emrals_locale $(@D)/temp_$(<F) | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+	@rm $(@D)/temp_$(<F)
+
+$(QT_QRC_CPP): $(QT_QRC) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(PROTOBUF_H)
+	@test -f $(RCC)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name emrals $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno qt/temp_emrals_locale.qrc
+
+CLEANFILES += $(CLEAN_QT)
+
+emrals_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_emrals_qt_OBJECTS) qt/emrals-qt$(EXEEXT) $(LIBBITCOINQT)
+
+emrals_qt : qt/emrals-qt$(EXEEXT)
+
+ui_%.h: %.ui
+	@test -f $(UIC)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(UIC) -o $@ $< || (echo "Error creating $@"; false)
+
+%.moc: %.cpp
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+moc_%.cpp: %.h
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+%.qm: %.ts
+	@test -f $(LRELEASE)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LRELEASE) -silent $< -qm $@

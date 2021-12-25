@@ -1,0 +1,8 @@
+/usr/bin/emrals-cli		--	gen_context(system_u:object_r:emrals_exec_t,s0)
+/usr/sbin/emralsd		--	gen_context(system_u:object_r:emrals_exec_t,s0)
+/usr/lib(64)?/emrals/emralsd		--	gen_context(system_u:object_r:emrals_exec_t,s0)
+
+/etc/emrals(/.*)?		gen_context(system_u:object_r:emrals_conf_t,s0)
+/var/lib/emrals(/.*)?		gen_context(system_u:object_r:emrals_var_lib_t,s0)
+
+(/var)?/run/emralsd(/.*)?   gen_context(system_u:object_r:emrals_var_run_t,s0)

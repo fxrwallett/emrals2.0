@@ -1,0 +1,81 @@
+policy_module(emrals, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type emrals_t;
+type emrals_exec_t;
+init_daemon_domain(emrals_t, emrals_exec_t)
+
+permissive emrals_t;
+
+type emrals_initrc_exec_t;
+init_script_file(emrals_initrc_exec_t)
+
+type emrals_conf_t;
+files_type(emrals_conf_t)
+
+type emrals_var_lib_t;
+files_type(emrals_var_lib_t)
+
+type emrals_var_run_t;
+files_type(emrals_var_run_t)
+
+type emrals_port_t;
+corenet_port(emrals_port_t)
+
+########################################
+#
+# emrals local policy
+#
+allow emrals_t self:process { fork };
+
+allow emrals_t self:fifo_file rw_fifo_file_perms;
+allow emrals_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(emrals_t, emrals_conf_t, emrals_conf_t)
+manage_files_pattern(emrals_t, emrals_conf_t, emrals_conf_t)
+
+manage_dirs_pattern(emrals_t, emrals_var_lib_t, emrals_var_lib_t)
+manage_files_pattern(emrals_t, emrals_var_lib_t, emrals_var_lib_t)
+files_var_lib_filetrans(emrals_t, emrals_var_lib_t, { dir file })
+
+manage_dirs_pattern(emrals_t, emrals_var_run_t, emrals_var_run_t)
+manage_files_pattern(emrals_t, emrals_var_run_t, emrals_var_run_t)
+
+sysnet_dns_name_resolve(emrals_t)
+corenet_all_recvfrom_unlabeled(emrals_t)
+
+allow emrals_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(emrals_t)
+corenet_tcp_sendrecv_generic_node(emrals_t)
+corenet_tcp_sendrecv_all_ports(emrals_t)
+corenet_tcp_bind_generic_node(emrals_t)
+
+gen_require(`
+    type emrals_port_t;
+')
+allow emrals_t emrals_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type emrals_port_t;
+')
+allow emrals_t emrals_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(emrals_t)
+
+files_read_etc_files(emrals_t)
+
+miscfiles_read_localization(emrals_t)
+
+sysnet_dns_name_resolve(emrals_t)
+
+allow emrals_t emrals_exec_t:file execute_no_trans;
+allow emrals_t self:process setsched;
+corecmd_exec_ls(emrals_t)
+corenet_tcp_connect_http_port(emrals_t)
+dev_read_urand(emrals_t)
+fs_getattr_xattr_fs(emrals_t)
+kernel_read_system_state(emrals_t)

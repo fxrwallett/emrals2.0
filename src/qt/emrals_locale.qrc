@@ -1,0 +1,17 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="de">locale/emrals_de.qm</file>
+        <file alias="en">locale/emrals_en.qm</file>
+        <file alias="en_US">locale/emrals_en_US.qm</file>
+        <file alias="es">locale/emrals_es.qm</file>
+        <file alias="fr_FR">locale/emrals_fr_FR.qm</file>
+        <file alias="hr_HR">locale/emrals_hr_HR.qm</file>
+        <file alias="it">locale/emrals_it.qm</file>
+        <file alias="ko_KR">locale/emrals_ko_KR.qm</file>
+        <file alias="nl">locale/emrals_nl.qm</file>
+        <file alias="pl">locale/emrals_pl.qm</file>
+        <file alias="ru">locale/emrals_ru.qm</file>
+        <file alias="tr">locale/emrals_tr.qm</file>
+        <file alias="zh_CN">locale/emrals_zh_CN.qm</file>
+    </qresource>
+</RCC>
