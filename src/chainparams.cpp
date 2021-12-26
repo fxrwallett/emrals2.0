@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2015 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 //Copyright (c) 2015-2020 The PIVX developers
-//Copyright (c) 2020 The emrals developers
+//Copyright (c) 2020 The blockidcoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -21,7 +21,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 {
     CMutableTransaction txNew;
     txNew.nVersion = 1;
-    txNew.vin.resize(1);
+    txNew.vin.resize(1); //try
     txNew.vout.resize(1);
     txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << std::vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
     txNew.vout[0].nValue = genesisReward;
@@ -40,8 +40,8 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "Germany to go into hard Easter lockdown as Covid-19 infections soar";
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const char* pszTimestamp = "here is 10-24-2019 and there are hundreds of payment systems, we already know how to spend! We need to save our money";
+    const CScript genesisOutputScript = CScript() << ParseHex("04d141cad775c8c931f8ee3b0c06e2158e9ba346404faeefbb1bf2d27209253b75a54e275a4747d3e8558998994a34d984bba7d3748c6b10b718edabe9792cd0b7") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -56,14 +56,14 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
  * + Contains no strange transactions
  */
 static Checkpoints::MapCheckpoints mapCheckpoints =
-    boost::assign::map_list_of(0, uint256S("000002999bfaf73d8f4b2909bbd335d4ac86d7617c3495054e3d024a220df760"))/*
-	(1000, uint256S("0x0000006b43065fdf445f07adca57fe5fd888902cb79c16fa48302cf1c0ab88ce"))
-	(10000, uint256S("0xa2fd284213d913463d827c166ed0220b30de857794956b9dfbaaa5395891ef32"))
-	(20000, uint256S("0x85acbdc4e8b609ddb3584c15f94248cc08d85c337736c12422f3e84a5bc51c4a"))*/;
+    boost::assign::map_list_of(0, uint256S("00000ab4a5ea75954ac5c7f48c452c5b113d7264a65f74c2056c17ffac0052ff"))/*
+    (150, uint256S("000000ef758b6b505cd8da02039e276c252e7d12b01857346f2a7abf93dc2681"))
+    (10000, uint256S("0xa2fd284213d913463d827c166ed0220b30de857794956b9dfbaaa5395891ef32"))
+    (20000, uint256S("0x85acbdc4e8b609ddb3584c15f94248cc08d85c337736c12422f3e84a5bc51c4a"))*/;
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1611351525, // * UNIX timestamp of last checkpoint block
+    1637100965, // * UNIX timestamp of last checkpoint block was 1611351525
     0,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
@@ -95,13 +95,40 @@ public:
         networkID = CBaseChainParams::MAIN;
         strNetworkID = "main";
 
-        genesis = CreateGenesisBlock(1616498200, 1502101, 0x1e0ffff0, 1, 0.00000050 * COIN);
+        genesis = CreateGenesisBlock(1571872054, 22475989, 0x1e0ffff0, 1, 0.00000050 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256("000002999bfaf73d8f4b2909bbd335d4ac86d7617c3495054e3d024a220df760"));
-        assert(genesis.hashMerkleRoot == uint256("a5157858db4f03c2f647c2c237860449a31f584b790b30dad7b986899c227071"));
+        assert(consensus.hashGenesisBlock == uint256("00000ab4a5ea75954ac5c7f48c452c5b113d7264a65f74c2056c17ffac0052ff"));
+        assert(genesis.hashMerkleRoot == uint256("822631568f1255a4b2a5c8f8989423f026a865fe995234ba909cc4a3bb55adf5"));
+
+        /*
+
+        if(genesis.GetHash() != uint256("0x"))
+        {
+        printf("MSearching for genesis block...\n");
+        uint256 hashTarget;
+        hashTarget.SetCompact(genesis.nBits);
+        while(uint256(genesis.GetHash()) > uint256(hashTarget))
+        {
+            ++genesis.nNonce;
+            if (genesis.nNonce == 0)
+            {
+                printf("Mainnet NONCE WRAPPED, incrementing time");
+                std::cout << std::string("Mainnet NONCE WRAPPED, incrementing time:\n");
+                ++genesis.nTime;
+            }
+            if (genesis.nNonce % 10000 == 0)
+            {
+               printf("Mainnet: nonce %08u: hash = %s \n", genesis.nNonce, genesis.GetHash().ToString().c_str());
+            }
+        }
+        printf("Mainnet block.nTime = %u \n", genesis.nTime);
+        printf("Mainnet block.nNonce = %u \n", genesis.nNonce);
+        printf("Mainnet block.hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
+        printf("Mainnet block.GetHash = %s\n", genesis.GetHash().ToString().c_str());
+        }*/
  
-        consensus.fPowAllowMinDifficultyBlocks = false;
-        consensus.powLimit   = ~UINT256_ZERO >> 20;   // emrals starting difficulty is 1 / 2^12
+        consensus.fPowAllowMinDifficultyBlocks = false; // ITA era false
+        consensus.powLimit   = ~UINT256_ZERO >> 20;   // blockidcoin starting difficulty is 1 / 2^12
         consensus.posLimitV1 = ~UINT256_ZERO >> 24;
         consensus.posLimitV2 = ~UINT256_ZERO >> 20;
         consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
@@ -119,16 +146,18 @@ public:
         consensus.nTargetTimespanV2 = 30 * 60;
         consensus.nTargetSpacing = 1 * 60;
         consensus.nTimeSlotLength = 15;
-        consensus.devAddress = "GfLHdwSHiUdWwSCoorcaiZGgB41s7mbSp8";
+        consensus.devAddress = "GM2X1BTg7wcyCcbbHfzu2yy8jbdEfdVMWf";
+
+
         // timelock after last collateral change
         consensus.nCollateralMaturityEnforcementHeight = 650000;
         consensus.nCollateralMaturity = 262800; // 1 year
-				
+                
         // spork keys
         consensus.strSporkPubKey = "048ade2a641dba7db37031e124cb2603b120ba9877356fbe51d7f67ece1912739df828fbaa1da43ff9dd60ee27a177a9dec49ef35238c52ada13be6223e94b0200";
         consensus.strSporkPubKeyOld = "0403932c276751b17a83e2af9fb14b97838fcb297768ed185e3a11746bd5e4c20f1078f6b0f9b531c7807b3a7d6f38b8380f85bdbd5ee5bbc8d7681ded872b830f";
-        consensus.nTime_EnforceNewSporkKey = 1610064000; // 01/08/2021 @ 12:00am (UTC)
-        consensus.nTime_RejectOldSporkKey = 1610060000; // 01/08/2021 @ 12:00am (UTC)
+        consensus.nTime_EnforceNewSporkKey = 1571872054; // 01/08/2021 @ 12:00am (UTC)
+        consensus.nTime_RejectOldSporkKey = 1571872054; // 01/08/2021 @ 12:00am (UTC)
 
         // height-based activations
         consensus.height_last_PoW = 1000;
@@ -151,29 +180,27 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        pchMessageStart[0] = 0xd4;
-        pchMessageStart[1] = 0x62;
+        pchMessageStart[0] = 0xd2;
+        pchMessageStart[1] = 0x12;
         pchMessageStart[2] = 0x36;
-        pchMessageStart[3] = 0x51;
+        pchMessageStart[3] = 0xd1;
         nDefaultPort = 31472;
 
-        vSeeds.push_back(CDNSSeedData("104.156.249.165", "104.156.249.165"));
-        vSeeds.push_back(CDNSSeedData("45.77.149.72", "45.77.149.72"));
-        vSeeds.push_back(CDNSSeedData("140.82.62.126", "140.82.62.126"));
-        vSeeds.push_back(CDNSSeedData("149.28.37.28", "149.28.37.28"));
+        vSeeds.push_back(CDNSSeedData("45.76.80.135", "45.76.80.135"));
+
 
         // Note that of those with the service bits flag, most only support a subset of possible options
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 38); // EMRALS addresses start with 'R'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 8); // EMRALS script addresses start with '4'
-        base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 63); // EMRALS private keys start with 'S'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 38); // BID addresses start with 'R'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 8); // BID script addresses start with '4'
+        base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 63); // BID private keys start with 'S'
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 212);
-        // EMRALS BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
-    	base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-    	// EMRALS BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
-    	base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
-    	// BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-    	base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
+        // BID BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
+        // BID BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+        // BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
     }
@@ -201,11 +228,11 @@ public:
 */
         genesis = CreateGenesisBlock(1610066000, 0, 0x1e0ffff0, 1, 250 * COIN);        
         consensus.hashGenesisBlock = genesis.GetHash();
-	//assert(consensus.hashGenesisBlock == uint256S("0x001"));
+    //assert(consensus.hashGenesisBlock == uint256S("0x001"));
         //assert(genesis.hashMerkleRoot == uint256S("0x001"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.powLimit   = ~UINT256_ZERO >> 14;   // emrals starting difficulty is 1 / 2^12
+        consensus.powLimit   = ~UINT256_ZERO >> 14;   // blockidcoin starting difficulty is 1 / 2^12
         consensus.posLimitV1 = ~UINT256_ZERO >> 24;
         consensus.posLimitV2 = ~UINT256_ZERO >> 20;
         consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
@@ -267,16 +294,16 @@ public:
         
         // nodes with support for servicebits filtering should be at the top
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 75); // EMRALS addresses start with 'X'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 4); // EMRALS script addresses start with '3'
-        base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 80); // EMRALS private keys start with 'Z'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 75); // BID addresses start with 'X'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 4); // BID script addresses start with '3'
+        base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 80); // BID private keys start with 'Z'
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 212);
-        // EMRALS BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
-	base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-	// EMRALS BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
-	base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
-	// BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-	base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
+        // BID BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+    base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
+    // BID BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+    base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+    // BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+    base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
     }
@@ -303,11 +330,11 @@ public:
 */
         genesis = CreateGenesisBlock(1610068000, 0, 0x1e0ffff0, 1, 250 * COIN);        
         consensus.hashGenesisBlock = genesis.GetHash();
-	//assert(consensus.hashGenesisBlock == uint256S("0x001"));
+    //assert(consensus.hashGenesisBlock == uint256S("0x001"));
         //assert(genesis.hashMerkleRoot == uint256S("0x001"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.powLimit   = ~UINT256_ZERO >> 14;   // emrals starting difficulty is 1 / 2^12
+        consensus.powLimit   = ~UINT256_ZERO >> 14;   // blockidcoin starting difficulty is 1 / 2^12
         consensus.posLimitV1 = ~UINT256_ZERO >> 24;
         consensus.posLimitV2 = ~UINT256_ZERO >> 20;
         consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
