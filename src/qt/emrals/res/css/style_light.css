@@ -57,14 +57,14 @@ HH       NAVIGATION
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 
 *[cssClass="container-nav"] {
-    background-color: qlineargradient(y1:0, y2: 1, stop: 0.75 #070606, stop: 1 #008a35);
+    background-color: qlineargradient(y1:0, y2: 1, stop: 0 #070606, stop: 1 #008a35);
 }
 
-QPushButton[cssClass="img-nav-logo-emrals"] {
-    qproperty-icon: url("://img-nav-logo-emrals");
-    qproperty-iconSize: 49px 60px;
-    border-bottom: 1px;
-    border-color: #008a35;
+QPushButton[cssClass="img-nav-logo"] {
+    qproperty-icon: url("://img-nav-logo");
+    qproperty-iconSize: 55px 65px;
+    /*border-bottom: 1px;
+    border-color: #008a35;*/
 }
 
 *[cssClass="btn-nav-receive"] {
